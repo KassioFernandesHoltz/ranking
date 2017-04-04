@@ -35,5 +35,9 @@ public class PaisRN {
 	public Pais[] itens() {
 		return this.paisDAO.itens();
 	}
+	
+	public Pais favorito(){
+		return this.paisDAO.favorito();
+	}
 
 }

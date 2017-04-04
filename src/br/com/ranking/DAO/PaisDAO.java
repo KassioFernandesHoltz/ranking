@@ -15,5 +15,7 @@ public interface PaisDAO {
 	public void excluir(int codigo);
 
 	public Pais[] itens();
+	
+	public Pais favorito();
 
 }

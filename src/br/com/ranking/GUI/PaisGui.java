@@ -13,11 +13,17 @@ public class PaisGui extends CrudGuiImpl {
 
 		Pais paisAux = new Pais();
 		PaisRN paisRN = new PaisRN();
-
+		Pais favorito = paisRN.favorito();
 		String nome;
 		String sigla;
 		Confederacao confederacao;
 		SimNao apurarRanking;
+
+		if (favorito == null) {
+			confederacao = Confederacao.AFC;
+		} else {
+			confederacao = favorito.getConfederacao();
+		}
 
 		nome = JOptionPane.showInputDialog(null, "Informe o Nome", "Pais",
 				JOptionPane.QUESTION_MESSAGE);
@@ -28,7 +34,7 @@ public class PaisGui extends CrudGuiImpl {
 		confederacao = (Confederacao) (JOptionPane.showInputDialog(null,
 				"Escolha a Federação", "Federação",
 				JOptionPane.QUESTION_MESSAGE, null, Confederacao.values(),
-				Confederacao.CONMEBOL));
+				confederacao));
 
 		apurarRanking = (SimNao) (JOptionPane.showInputDialog(null,
 				"Apurar Ranking?", "Ranking", JOptionPane.QUESTION_MESSAGE,
@@ -83,10 +89,10 @@ public class PaisGui extends CrudGuiImpl {
 		PaisRN paisRN = new PaisRN();
 
 		Pais paises[] = paisRN.itens();
-		
+
 		paisAux = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
 				"Excluir", JOptionPane.DEFAULT_OPTION, null, paises, paises[0]);
-		
+
 		paisRN.excluir(paisAux.getCodigo());
 
 	}

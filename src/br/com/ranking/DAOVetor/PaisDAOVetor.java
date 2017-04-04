@@ -2,12 +2,15 @@ package br.com.ranking.DAOVetor;
 
 import br.com.ranking.DAO.PaisDAO;
 import br.com.ranking.entidades.Pais;
+import br.com.ranking.enumeracoes.SimNao;
 
 public class PaisDAOVetor implements PaisDAO {
 
 	private static int autoIncremento;
 	private static int quantidade;
 	private static Pais paises[] = new Pais[100];
+	private static Pais favorito;
+	private static int indiceFavorito;
 
 	public PaisDAOVetor() {
 		// TODO Auto-generated constructor stub
@@ -19,6 +22,18 @@ public class PaisDAOVetor implements PaisDAO {
 		autoIncremento++;
 		pais.setCodigo(autoIncremento);
 		paises[quantidade] = pais;
+
+		if (quantidade == 0) {
+			favorito = pais;
+			indiceFavorito = 0;
+		} else {
+			if (pais.getApurarRanking() == SimNao.Sim) {
+				favorito = pais;
+				paises[indiceFavorito].setApurarRanking(SimNao.Nao);
+				indiceFavorito = quantidade;
+			}
+		}
+
 		quantidade++;
 
 	}
@@ -51,9 +66,9 @@ public class PaisDAOVetor implements PaisDAO {
 		String aux = "";
 		for (int i = 0; i < quantidade; i++) {
 			aux += "Código: " + paises[i].getCodigo() + ", Pais: "
-					+ paises[i].toString() + ", Sigla: "
-					+ paises[i].getSigla() + ", Federação: "
-					+ paises[i].getConfederacao().name() + ", Apura Ranking?: "
+					+ paises[i].toString() + ", Sigla: " + paises[i].getSigla()
+					+ ", Federação: " + paises[i].getConfederacao().name()
+					+ ", Apura Ranking?: "
 					+ paises[i].getApurarRanking().name() + "\n";
 		}
 		return aux;
@@ -90,6 +105,11 @@ public class PaisDAOVetor implements PaisDAO {
 		}
 
 		return aux;
+	}
+
+	@Override
+	public Pais favorito() {
+		return favorito;
 	}
 
 }
