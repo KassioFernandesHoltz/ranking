@@ -12,10 +12,12 @@ public interface PaisDAO {
 
 	public String listar();
 
-	public void excluir(int codigo);
+	public void excluir(Pais pais);
 
 	public Pais[] itens();
 	
-	public Pais favorito();
+	public void setFavorito(Pais pais);
+	
+	public Pais getFavorito();
 
 }

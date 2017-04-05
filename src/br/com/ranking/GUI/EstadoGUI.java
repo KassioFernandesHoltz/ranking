@@ -14,25 +14,41 @@ public class EstadoGUI extends CrudGuiImpl {
 		EstadoRN estadoRN = new EstadoRN();
 		PaisRN paisRN = new PaisRN();
 		Pais paises[] = paisRN.itens();
+		Pais favorito = paisRN.getFavorito();
 
-		String nome;
-		String sigla;
-		Pais pais = new Pais();
+		// verifica se o país é favorito e atribui o primeiro pais como sugestão
+		if (favorito == null) {
+			if (paises.length != 0) {
+				favorito = paises[0];
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"É preciso cadastrar algum país", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
-		nome = JOptionPane.showInputDialog(null, "Informe o Nome", "Estado",
-				JOptionPane.QUESTION_MESSAGE);
+		}
+		if (favorito != null) {
 
-		sigla = JOptionPane.showInputDialog(null, "Informe a Sigla", "Sigla",
-				JOptionPane.QUESTION_MESSAGE);
+			String nome;
+			String sigla;
+			Pais pais = new Pais();
 
-		pais = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
-				"País", JOptionPane.QUESTION_MESSAGE, null, paises, paises[0]);
+			nome = JOptionPane.showInputDialog(null, "Informe o Nome",
+					"Estado", JOptionPane.QUESTION_MESSAGE);
 
-		estadoAux.setNome(nome);
-		estadoAux.setSigla(sigla.toUpperCase());
-		estadoAux.setPais(pais);
+			sigla = JOptionPane.showInputDialog(null, "Informe a Sigla",
+					"Sigla", JOptionPane.QUESTION_MESSAGE);
 
-		estadoRN.incluir(estadoAux);
+			pais = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
+					"País", JOptionPane.QUESTION_MESSAGE, null, paises,
+					favorito);
+
+			estadoAux.setNome(nome);
+			estadoAux.setSigla(sigla.toUpperCase());
+			estadoAux.setPais(pais);
+
+			estadoRN.incluir(estadoAux);
+		}
 
 	}
 
@@ -60,10 +76,12 @@ public class EstadoGUI extends CrudGuiImpl {
 		estadoAux.setSigla(JOptionPane.showInputDialog("Altere a sigla",
 				estadoAux.getSigla()).toUpperCase());
 
-		estadoAux.setPais((Pais) JOptionPane.showInputDialog(null,
-				"Escolha o Pais do qual desejar alterar o Estado", "País",
-				JOptionPane.QUESTION_MESSAGE, null, paises, estadoAux.getPais()));
-		
+		estadoAux
+				.setPais((Pais) JOptionPane.showInputDialog(null,
+						"Escolha o Pais do qual desejar alterar o Estado",
+						"País", JOptionPane.QUESTION_MESSAGE, null, paises,
+						estadoAux.getPais()));
+
 		estadoRN.atualizar(estadoAux);
 
 	}

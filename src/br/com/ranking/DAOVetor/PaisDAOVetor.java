@@ -2,7 +2,6 @@ package br.com.ranking.DAOVetor;
 
 import br.com.ranking.DAO.PaisDAO;
 import br.com.ranking.entidades.Pais;
-import br.com.ranking.enumeracoes.SimNao;
 
 public class PaisDAOVetor implements PaisDAO {
 
@@ -10,10 +9,19 @@ public class PaisDAOVetor implements PaisDAO {
 	private static int quantidade;
 	private static Pais paises[] = new Pais[100];
 	private static Pais favorito;
-	private static int indiceFavorito;
 
 	public PaisDAOVetor() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Pais getFavorito() {
+		return favorito;
+	}
+
+	@Override
+	public void setFavorito(Pais favorito) {
+		PaisDAOVetor.favorito = favorito;
 	}
 
 	@Override
@@ -22,17 +30,6 @@ public class PaisDAOVetor implements PaisDAO {
 		autoIncremento++;
 		pais.setCodigo(autoIncremento);
 		paises[quantidade] = pais;
-
-		if (quantidade == 0) {
-			favorito = pais;
-			indiceFavorito = 0;
-		} else {
-			if (pais.getApurarRanking() == SimNao.Sim) {
-				favorito = pais;
-				paises[indiceFavorito].setApurarRanking(SimNao.Nao);
-				indiceFavorito = quantidade;
-			}
-		}
 
 		quantidade++;
 
@@ -75,12 +72,12 @@ public class PaisDAOVetor implements PaisDAO {
 	}
 
 	@Override
-	public void excluir(int codigo) {
+	public void excluir(Pais pais) {
 		// TODO Auto-generated method stub
 		int pos = 0;
 		boolean achou = false;
 		for (int i = 0; i < quantidade; i++) {
-			if (paises[i].getCodigo() == codigo) {
+			if (paises[i].getCodigo() == pais.getCodigo()) {
 				pos = i;
 				achou = true;
 				break;
@@ -105,11 +102,6 @@ public class PaisDAOVetor implements PaisDAO {
 		}
 
 		return aux;
-	}
-
-	@Override
-	public Pais favorito() {
-		return favorito;
 	}
 
 }

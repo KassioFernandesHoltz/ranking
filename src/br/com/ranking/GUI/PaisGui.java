@@ -13,7 +13,7 @@ public class PaisGui extends CrudGuiImpl {
 
 		Pais paisAux = new Pais();
 		PaisRN paisRN = new PaisRN();
-		Pais favorito = paisRN.favorito();
+		Pais favorito = paisRN.getFavorito();
 		String nome;
 		String sigla;
 		Confederacao confederacao;
@@ -93,7 +93,7 @@ public class PaisGui extends CrudGuiImpl {
 		paisAux = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
 				"Excluir", JOptionPane.DEFAULT_OPTION, null, paises, paises[0]);
 
-		paisRN.excluir(paisAux.getCodigo());
+		paisRN.excluir(paisAux);
 
 	}
 
