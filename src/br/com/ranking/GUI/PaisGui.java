@@ -6,6 +6,7 @@ import br.com.ranking.RN.PaisRN;
 import br.com.ranking.entidades.Pais;
 import br.com.ranking.enumeracoes.Confederacao;
 import br.com.ranking.enumeracoes.SimNao;
+import br.com.ranking.util.RankingUtil;
 
 public class PaisGui extends CrudGuiImpl {
 
@@ -27,6 +28,8 @@ public class PaisGui extends CrudGuiImpl {
 
 		nome = JOptionPane.showInputDialog(null, "Informe o Nome", "Pais",
 				JOptionPane.QUESTION_MESSAGE);
+
+		nome = RankingUtil.PrimeiraLetraMaiuscula(nome);
 
 		sigla = JOptionPane.showInputDialog(null, "Informe a Sigla", "Sigla",
 				JOptionPane.QUESTION_MESSAGE);
@@ -59,8 +62,8 @@ public class PaisGui extends CrudGuiImpl {
 		paisAux = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
 				"Alterar", JOptionPane.DEFAULT_OPTION, null, paises, paises[0]);
 
-		paisAux.setNome(JOptionPane.showInputDialog("Altere o nome",
-				paisAux.getNome()));
+		paisAux.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
+				.showInputDialog("Altere o nome", paisAux.getNome())));
 
 		paisAux.setSigla(JOptionPane.showInputDialog("Altere a sigla",
 				paisAux.getSigla()).toUpperCase());
@@ -80,7 +83,16 @@ public class PaisGui extends CrudGuiImpl {
 
 	public void listar() {
 		PaisRN paisRN = new PaisRN();
-		JOptionPane.showMessageDialog(null, paisRN.listar());
+		Pais paises[] = paisRN.itens();
+		String aux = "";
+		for (Pais pais : paises) {
+			aux += "Código: " + pais.getCodigo() + ", " + "País: "
+					+ pais.getNome() + ", " + "Sigla: " + pais.getSigla()
+					+ ", " + "Confederação: " + pais.getConfederacao() + ", "
+					+ "Apurar Rankig? " + pais.getApurarRanking() + "\n";
+		}
+
+		JOptionPane.showMessageDialog(null, aux);
 	}
 
 	public void excluir() {

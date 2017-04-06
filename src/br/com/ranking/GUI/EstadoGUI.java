@@ -6,6 +6,7 @@ import br.com.ranking.RN.EstadoRN;
 import br.com.ranking.RN.PaisRN;
 import br.com.ranking.entidades.Estado;
 import br.com.ranking.entidades.Pais;
+import br.com.ranking.util.RankingUtil;
 
 public class EstadoGUI extends CrudGuiImpl {
 
@@ -33,8 +34,9 @@ public class EstadoGUI extends CrudGuiImpl {
 			String sigla;
 			Pais pais = new Pais();
 
-			nome = JOptionPane.showInputDialog(null, "Informe o Nome",
-					"Estado", JOptionPane.QUESTION_MESSAGE);
+			nome = RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
+					.showInputDialog(null, "Informe o Nome", "Estado",
+							JOptionPane.QUESTION_MESSAGE));
 
 			sigla = JOptionPane.showInputDialog(null, "Informe a Sigla",
 					"Sigla", JOptionPane.QUESTION_MESSAGE);
@@ -70,8 +72,8 @@ public class EstadoGUI extends CrudGuiImpl {
 				"Escolha o Estado", "Estado", JOptionPane.QUESTION_MESSAGE,
 				null, estados, estados[0]);
 
-		estadoAux.setNome(JOptionPane.showInputDialog("Altere o nome",
-				estadoAux.getNome()));
+		estadoAux.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
+				.showInputDialog("Altere o nome", estadoAux.getNome())));
 
 		estadoAux.setSigla(JOptionPane.showInputDialog("Altere a sigla",
 				estadoAux.getSigla()).toUpperCase());

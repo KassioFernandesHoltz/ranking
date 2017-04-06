@@ -63,10 +63,6 @@ public class PaisRN {
 		}
 	}
 
-	public String listar() {
-		return this.paisDAO.listar();
-	}
-
 	public Pais[] itens() {
 		return this.paisDAO.itens();
 	}

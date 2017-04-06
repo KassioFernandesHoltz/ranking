@@ -58,20 +58,6 @@ public class PaisDAOVetor implements PaisDAO {
 	}
 
 	@Override
-	public String listar() {
-		// TODO Auto-generated method stub
-		String aux = "";
-		for (int i = 0; i < quantidade; i++) {
-			aux += "Código: " + paises[i].getCodigo() + ", Pais: "
-					+ paises[i].toString() + ", Sigla: " + paises[i].getSigla()
-					+ ", Federação: " + paises[i].getConfederacao().name()
-					+ ", Apura Ranking?: "
-					+ paises[i].getApurarRanking().name() + "\n";
-		}
-		return aux;
-	}
-
-	@Override
 	public void excluir(Pais pais) {
 		// TODO Auto-generated method stub
 		int pos = 0;
