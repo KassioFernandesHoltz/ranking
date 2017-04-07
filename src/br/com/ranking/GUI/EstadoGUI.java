@@ -60,13 +60,20 @@ public class EstadoGUI extends CrudGuiImpl {
 		EstadoRN estadoRN = new EstadoRN();
 		PaisRN paisRN = new PaisRN();
 		Pais paises[] = paisRN.itens();
-		Pais paisAux = new Pais();
+		Pais pais = new Pais();
+		
+		if (paisRN.getFavorito() == null) {
+			pais = paises[0];
+		} else {
+			pais = paisRN.getFavorito();
+		}
 
-		paisAux = (Pais) JOptionPane.showInputDialog(null,
+
+		pais = (Pais) JOptionPane.showInputDialog(null,
 				"Escolha o Pais do qual desejar alterar o Estado", "País",
-				JOptionPane.QUESTION_MESSAGE, null, paises, paises[0]);
+				JOptionPane.QUESTION_MESSAGE, null, paises, pais);
 
-		Estado estados[] = estadoRN.itens(paisAux.getCodigo());
+		Estado estados[] = estadoRN.itens(pais);
 
 		estadoAux = (Estado) JOptionPane.showInputDialog(null,
 				"Escolha o Estado", "Estado", JOptionPane.QUESTION_MESSAGE,
@@ -85,6 +92,57 @@ public class EstadoGUI extends CrudGuiImpl {
 						estadoAux.getPais()));
 
 		estadoRN.atualizar(estadoAux);
+
+	}
+
+	public void listar() {
+
+		EstadoRN estadoRN = new EstadoRN();
+		PaisRN paisRN = new PaisRN();
+		Pais pais = new Pais();
+		Pais paises[] = paisRN.itens();
+		String aux = "";
+
+		if (paisRN.getFavorito() == null) {
+			pais = paises[0];
+		} else {
+			pais = paisRN.getFavorito();
+		}
+
+		pais = (Pais) JOptionPane.showInputDialog(null,
+				"Escolha o Pais do qual deseja-se listar os Estados", "País",
+				JOptionPane.QUESTION_MESSAGE, null, paises, pais);
+
+		Estado estados[] = estadoRN.itens(pais);
+
+		for (Estado estado : estados) {
+			aux += "Código: " + estado.getCodigo() + ", " + "Nome: "
+					+ estado.getNome() + ", " + "Sigla: " + estado.getSigla()
+					+ ", " + "País: " + estado.getPais().getNome() + "\n";
+		}
+
+		JOptionPane.showMessageDialog(null, aux);
+
+	}
+
+	public void excluir() {
+ 
+		Estado estado = new Estado();
+		EstadoRN estadoRN = new EstadoRN();
+		PaisRN paisRN = new PaisRN();
+		Pais pais = new Pais();
+		Pais paises[] = paisRN.itens();
+
+		pais = (Pais) JOptionPane.showInputDialog(null,
+				"Escolha o Pais do qual deseja-se escluir um Estado", "País",
+				JOptionPane.QUESTION_MESSAGE, null, paises, paises[0]);
+		
+		Estado estados[] = estadoRN.itens(pais);
+		
+		estado = (Estado) JOptionPane.showInputDialog(null, "Escolha o Estado",
+				"Excluir", JOptionPane.DEFAULT_OPTION, null, estados, estados[0]);
+		
+		estadoRN.excluir(estado);
 
 	}
 

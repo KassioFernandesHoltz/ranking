@@ -1,6 +1,7 @@
 package br.com.ranking.DAO;
 
 import br.com.ranking.entidades.Estado;
+import br.com.ranking.entidades.Pais;
 
 public interface EstadoDAO {
 
@@ -10,10 +11,8 @@ public interface EstadoDAO {
 
 	public Estado carregar(int codigo);
 
-	public String listar();
+	public void excluir(Estado estado);
 
-	public void excluir(int codigo);
-
-	public Estado[] itens(int codPais);
+	public Estado[] itens(Pais pais);
 
 }
