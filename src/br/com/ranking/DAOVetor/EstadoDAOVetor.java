@@ -79,16 +79,13 @@ public class EstadoDAOVetor implements EstadoDAO {
 			}
 		}
 
-		if (qtdEstado != 0) {
-			Estado auxiliar[] = new Estado[qtdEstado];
-			for (int i = 0; i < qtdEstado; i++) {
-				auxiliar[i] = aux[i];
-			}
-
-			return auxiliar;
+		Estado auxiliar[] = new Estado[qtdEstado];
+		for (int i = 0; i < qtdEstado; i++) {
+			auxiliar[i] = aux[i];
 		}
 
-		return null;
+		return auxiliar;
+
 	}
 
 }
