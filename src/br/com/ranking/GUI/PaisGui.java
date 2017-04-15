@@ -59,26 +59,33 @@ public class PaisGui extends CrudGuiImpl {
 
 		Pais paises[] = paisRN.itens();
 
-		paisAux = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
-				"Alterar", JOptionPane.DEFAULT_OPTION, null, paises, paises[0]);
+		if (paises.length == 0) {
+			JOptionPane.showMessageDialog(null,
+					"É preciso cadastrar algum País", "",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
 
-		paisAux.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
-				.showInputDialog("Altere o nome", paisAux.getNome())));
+			paisAux = (Pais) JOptionPane.showInputDialog(null,
+					"Escolha o País", "Alterar", JOptionPane.DEFAULT_OPTION,
+					null, paises, paises[0]);
 
-		paisAux.setSigla(JOptionPane.showInputDialog("Altere a sigla",
-				paisAux.getSigla()).toUpperCase());
+			paisAux.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
+					.showInputDialog("Altere o nome", paisAux.getNome())));
 
-		paisAux.setConfederacao((Confederacao) JOptionPane.showInputDialog(
-				null, "Altere a Confederação", "Confederação",
-				JOptionPane.DEFAULT_OPTION, null, Confederacao.values(),
-				paisAux.getConfederacao()));
+			paisAux.setSigla(JOptionPane.showInputDialog("Altere a sigla",
+					paisAux.getSigla()).toUpperCase());
 
-		paisAux.setApurarRanking((SimNao) JOptionPane.showInputDialog(null,
-				"Apurar Ranking?", "Ranking", JOptionPane.DEFAULT_OPTION, null,
-				SimNao.values(), paisAux.getApurarRanking()));
+			paisAux.setConfederacao((Confederacao) JOptionPane.showInputDialog(
+					null, "Altere a Confederação", "Confederação",
+					JOptionPane.DEFAULT_OPTION, null, Confederacao.values(),
+					paisAux.getConfederacao()));
 
-		paisRN.atualizar(paisAux);
+			paisAux.setApurarRanking((SimNao) JOptionPane.showInputDialog(null,
+					"Apurar Ranking?", "Ranking", JOptionPane.DEFAULT_OPTION,
+					null, SimNao.values(), paisAux.getApurarRanking()));
 
+			paisRN.atualizar(paisAux);
+		}
 	}
 
 	public void listar() {
@@ -102,11 +109,18 @@ public class PaisGui extends CrudGuiImpl {
 
 		Pais paises[] = paisRN.itens();
 
-		paisAux = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
-				"Excluir", JOptionPane.DEFAULT_OPTION, null, paises, paises[0]);
+		if (paises.length == 0) {
+			JOptionPane.showMessageDialog(null,
+					"É preciso cadastrar algum País", "",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
 
-		paisRN.excluir(paisAux);
+			paisAux = (Pais) JOptionPane.showInputDialog(null,
+					"Escolha o País", "Excluir", JOptionPane.DEFAULT_OPTION,
+					null, paises, paises[0]);
 
+			paisRN.excluir(paisAux);
+		}
 	}
 
 }
