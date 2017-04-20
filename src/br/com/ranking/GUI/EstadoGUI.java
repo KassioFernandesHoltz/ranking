@@ -13,17 +13,18 @@ public class EstadoGUI extends CrudGuiImpl {
 	EstadoRN estadoRN = new EstadoRN();
 	PaisRN paisRN = new PaisRN();
 	private Pais favorito;
+	private Pais pais = new Pais();
+	private Estado estado = new Estado();
 
 	public void incluir() {
 
 		Estado estadoAux = new Estado();
-		Pais paises[] = paisRN.itens();
 
-		if (verificaPaises(paises)) {
+		if (verificaPaises()) {
 
 			String nome;
 			String sigla;
-			Pais pais = new Pais();
+			// Pais pais = new Pais();
 
 			nome = RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
 					.showInputDialog(null, "Informe o Nome", "Estado",
@@ -33,7 +34,7 @@ public class EstadoGUI extends CrudGuiImpl {
 					"Sigla", JOptionPane.QUESTION_MESSAGE);
 
 			pais = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
-					"País", JOptionPane.QUESTION_MESSAGE, null, paises,
+					"País", JOptionPane.QUESTION_MESSAGE, null, paisRN.itens(),
 					favorito);
 
 			estadoAux.setNome(nome);
@@ -48,58 +49,24 @@ public class EstadoGUI extends CrudGuiImpl {
 	public void alterar() {
 
 		Estado estadoAux = new Estado();
-		//Pais paises[] = paisRN.itens();
-		//Pais pais = new Pais();
-		
-		if(verificaEstado("Escolha o Pais do qual desejar alterar o Estado")){
-			estadoAux = (Estado) JOptionPane
-					.showInputDialog(null, "Escolha o Estado", "Estado",
-							JOptionPane.QUESTION_MESSAGE, null, estadoRN.itens(pais),
-							estados[0]);
-		}
+		// Pais paises[] = paisRN.itens();
+		// Pais pais = new Pais();
 
-		if (paises.length == 0) {
-			JOptionPane.showMessageDialog(null,
-					"É preciso cadastrar algum país", "",
-					JOptionPane.ERROR_MESSAGE);
-		} else {
-			// verifica se o país é favorito e atribui o primeiro pais como
-			// sugestão
-			if (favorito == null) {
-				favorito = paises[0];
-			}
+		if (verificaEstado("Escolha o Pais do qual desejar alterar o Estado")) {
+			estadoAux = (Estado) JOptionPane.showInputDialog(null,
+					"Escolha o Estado", "Estado", JOptionPane.QUESTION_MESSAGE,
+					null, estadoRN.itens(pais), estado);
+			estadoAux.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
+					.showInputDialog("Altere o nome", estadoAux.getNome())));
 
-			pais = (Pais) JOptionPane.showInputDialog(null,
+			estadoAux.setSigla(JOptionPane.showInputDialog("Altere a sigla",
+					estadoAux.getSigla()).toUpperCase());
+
+			estadoAux.setPais((Pais) JOptionPane.showInputDialog(null,
 					"Escolha o Pais do qual desejar alterar o Estado", "País",
-					JOptionPane.QUESTION_MESSAGE, null, paises, pais);
-
-			Estado estados[] = estadoRN.itens(pais);
-
-			if (estados.length == 0) {
-				JOptionPane
-						.showMessageDialog(null,
-								"É preciso cadastrar algum estado para o "
-										+ pais.getNome(), "",
-								JOptionPane.ERROR_MESSAGE);
-			} else {
-				estadoAux = (Estado) JOptionPane
-						.showInputDialog(null, "Escolha o Estado", "Estado",
-								JOptionPane.QUESTION_MESSAGE, null, estados,
-								estados[0]);
-				estadoAux.setNome(RankingUtil
-						.PrimeiraLetraMaiuscula(JOptionPane.showInputDialog(
-								"Altere o nome", estadoAux.getNome())));
-
-				estadoAux.setSigla(JOptionPane.showInputDialog(
-						"Altere a sigla", estadoAux.getSigla()).toUpperCase());
-
-				estadoAux.setPais((Pais) JOptionPane.showInputDialog(null,
-						"Escolha o Pais do qual desejar alterar o Estado",
-						"País", JOptionPane.QUESTION_MESSAGE, null, paises,
-						estadoAux.getPais()));
-
-				estadoRN.atualizar(estadoAux);
-			}
+					JOptionPane.QUESTION_MESSAGE, null, paisRN.itens(),
+					estadoAux.getPais()));
+			estadoRN.atualizar(estadoAux);
 
 		}
 
@@ -107,34 +74,17 @@ public class EstadoGUI extends CrudGuiImpl {
 
 	public void listar() {
 
-		EstadoRN estadoRN = new EstadoRN();
-		PaisRN paisRN = new PaisRN();
-		Pais pais = new Pais();
-		Pais paises[] = paisRN.itens();
 		String aux = "";
 
-		Pais favorito = paisRN.getFavorito();
+		// Pais favorito = paisRN.getFavorito();
 
-		// verifica se o país é favorito e atribui o primeiro pais como sugestão
-		if (favorito == null) {
-			if (paises.length != 0) {
-				favorito = paises[0];
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"É preciso cadastrar algum país", "",
-						JOptionPane.ERROR_MESSAGE);
-			}
+		if (verificaPaises()) {
 
-		}
+			pais = (Pais) JOptionPane.showInputDialog(null, "Escolha o País",
+					"País", JOptionPane.QUESTION_MESSAGE, null, paisRN.itens(),
+					favorito);
 
-		if (favorito != null) {
-			pais = (Pais) JOptionPane.showInputDialog(null,
-					"Escolha o Pais do qual deseja-se listar os Estados",
-					"País", JOptionPane.QUESTION_MESSAGE, null, paises, pais);
-
-			Estado estados[] = estadoRN.itens(pais);
-
-			for (Estado estado : estados) {
+			for (Estado estado : estadoRN.itens(pais)) {
 				aux += "Código: " + estado.getCodigo() + ", " + "Nome: "
 						+ estado.getNome() + ", " + "Sigla: "
 						+ estado.getSigla() + ", " + "País: "
@@ -148,49 +98,20 @@ public class EstadoGUI extends CrudGuiImpl {
 
 	public void excluir() {
 
-		Estado estado = new Estado();
-		EstadoRN estadoRN = new EstadoRN();
-		PaisRN paisRN = new PaisRN();
-		Pais pais = new Pais();
-		Pais paises[] = paisRN.itens();
-		Pais favorito = paisRN.getFavorito();
-
-		if (paises.length == 0) {
-			JOptionPane.showMessageDialog(null,
-					"É preciso cadastrar algum país", "",
-					JOptionPane.ERROR_MESSAGE);
-		} else {
-			// verifica se o país é favorito e atribui o primeiro pais como
-			// sugestão
-			if (favorito == null) {
-				favorito = paises[0];
-			}
-			pais = (Pais) JOptionPane.showInputDialog(null,
-					"Escolha o Pais do qual deseja-se escluir um Estado",
-					"País", JOptionPane.QUESTION_MESSAGE, null, paises,
-					favorito);
-			Estado estados[] = estadoRN.itens(pais);
-
-			if (estados.length == 0) {
-				JOptionPane
-						.showMessageDialog(null,
-								"É preciso cadastrar algum estado para o "
-										+ pais.getNome(), "",
-								JOptionPane.ERROR_MESSAGE);
-			} else {
-				estado = (Estado) JOptionPane.showInputDialog(null,
-						"Escolha o Estado", "Excluir",
-						JOptionPane.DEFAULT_OPTION, null, estados, estados[0]);
-				estadoRN.excluir(estado);
-			}
+		if (verificaEstado("Escolha o Pais do qual desejar excluir o Estado")) {
+			Estado estadoAux = new Estado();
+			estadoAux = (Estado) JOptionPane.showInputDialog(null,
+					"Escolha o Estado", "Estado", JOptionPane.QUESTION_MESSAGE,
+					null, estadoRN.itens(pais), estado);
+			estadoRN.excluir(estadoAux);
 		}
 
 	}
 
-	private boolean verificaPaises(Pais paises[]) {
+	private boolean verificaPaises() {
 		favorito = paisRN.getFavorito();
 		boolean resultado = true;
-
+		Pais paises[] = paisRN.itens();
 		if (paises.length == 0) {
 			resultado = false;
 			JOptionPane.showMessageDialog(null,
@@ -200,29 +121,32 @@ public class EstadoGUI extends CrudGuiImpl {
 			if (favorito == null) {
 				favorito = paises[0];
 			}
+
 		}
 
 		return resultado;
 	}
 
-	private boolean verificaEstado( String mensagem) {
+	private boolean verificaEstado(String mensagem) {
 
 		boolean resultado = true;
 
-		if (!verificaPaises(paisRN.itens())) {
+		if (!verificaPaises()) {
 			return false;
 		} else {
-			Pais pais = (Pais) JOptionPane.showInputDialog(null, mensagem,
-					"País", JOptionPane.QUESTION_MESSAGE, null, paisRN.itens(),
+			pais = (Pais) JOptionPane.showInputDialog(null, mensagem, "País",
+					JOptionPane.QUESTION_MESSAGE, null, paisRN.itens(),
 					favorito);
-
-			if (estadoRN.itens(pais).length == 0) {
+			Estado estados[] = estadoRN.itens(pais);
+			if (estados.length == 0) {
 				resultado = false;
 				JOptionPane
 						.showMessageDialog(null,
 								"É preciso cadastrar algum estado para o "
 										+ pais.getNome(), "",
 								JOptionPane.ERROR_MESSAGE);
+			} else {
+				estado = estados[0];
 			}
 
 		}
