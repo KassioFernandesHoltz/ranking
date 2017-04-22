@@ -20,83 +20,103 @@ public class CidadeGUI extends CrudGuiImpl {
 	Estado estado = new Estado();
 	String nome;
 	Cidade cidade = new Cidade();
+	
+	/*
+	static {
+		Pais paisAux1 = new Pais();
+		Pais paisAux2 = new Pais();
+		Estado estadoAux1 = new Estado();
+		Estado estadoAux2 = new Estado();
+		Estado estadoAux3 = new Estado();
+		Estado estadoAux4 = new Estado();
+		PaisRN paisAuxRN = new PaisRN();
+		EstadoRN estadoAuxRn = new EstadoRN();
+
+		paisAux1.setNome("Brasil");
+		paisAux1.setSigla("BRA");
+		paisAux1.setConfederacao(Confederacao.CONMEBOL);
+		paisAux1.setApurarRanking(SimNao.Sim);
+		paisAuxRN.incluir(paisAux1);
+
+		estadoAux1.setNome("Espirito Santo");
+		estadoAux1.setSigla("ES");
+		estadoAux1.setPais(paisAux1);
+		estadoAuxRn.incluir(estadoAux1);
+
+		estadoAux2.setNome("Rio de Janeiro");
+		estadoAux2.setSigla("RJ");
+		estadoAux2.setPais(paisAux1);
+		estadoAuxRn.incluir(estadoAux2);
+
+		paisAux2.setNome("Italia");
+		paisAux2.setSigla("ITA");
+		paisAux2.setConfederacao(Confederacao.UEFA);
+		paisAux2.setApurarRanking(SimNao.Nao);
+		paisAuxRN.incluir(paisAux2);
+
+		estadoAux3.setNome("Milão");
+		estadoAux3.setSigla("MI");
+		estadoAux3.setPais(paisAux2);
+		estadoAuxRn.incluir(estadoAux3);
+
+		estadoAux4.setNome("Napoli");
+		estadoAux4.setSigla("NP");
+		estadoAux4.setPais(paisAux2);
+		estadoAuxRn.incluir(estadoAux4);
+
+	} */
 
 	public void incluir() {
 
-		
-		if(verificaEstado("Selecione o País")){
-			
-			cidade.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
+		Cidade cidadeAux = new Cidade();
+
+		if (verificaEstado("Selecione o País")) {
+
+			cidadeAux.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
 					.showInputDialog(null, "Informe o nome da cidade",
 							"Cidade", JOptionPane.QUESTION_MESSAGE)));
-			
-			cidade.setEstado((Estado) JOptionPane
-					.showInputDialog(null, "Escolha o Estado", "Estado",
-							JOptionPane.QUESTION_MESSAGE, null, estadoRN.itens(pais),
-							estado));
-			
-			cidadeRN.incluir(cidade);
-			
+
+			cidadeAux.setEstado((Estado) JOptionPane.showInputDialog(null,
+					"Escolha o Estado", "Estado", JOptionPane.QUESTION_MESSAGE,
+					null, estadoRN.itens(pais), estado));
+
+			cidadeRN.incluir(cidadeAux);
+
 		}
-		
-		
 
 	}
 
 	public void alterar() {
-		Cidade cidade = new Cidade();
-		Estado estado = new Estado();
-		EstadoRN estadoRN = new EstadoRN();
-		PaisRN paisRN = new PaisRN();
-		CidadeRN cidadeRN = new CidadeRN();
-		Pais favorito = paisRN.getFavorito();
-		Pais paises[] = paisRN.itens();
 
-		if (paises.length == 0) {
-			JOptionPane.showMessageDialog(null,
-					"É preciso cadastrar algum país", "",
-					JOptionPane.ERROR_MESSAGE);
-		} else {
-			if (favorito == null) {
-				favorito = paises[0];
-			}
+		Cidade cidadeAux = new Cidade();
+		Estado estadoAux = new Estado();
+
+		if (verificaCidade("Informe o Estado do cidade")) {
+
+			cidadeAux = (Cidade) JOptionPane.showInputDialog(null,
+					"Escolha o Estado", "Estado", JOptionPane.QUESTION_MESSAGE,
+					null, cidadeRN.itens(estado), cidade);
+
+			cidadeAux.setNome(RankingUtil.PrimeiraLetraMaiuscula(JOptionPane
+					.showInputDialog("Altere o nome", cidadeAux.getNome())));
+
 			favorito = (Pais) JOptionPane.showInputDialog(null,
 					"Escolha o País da cidade", "País",
-					JOptionPane.QUESTION_MESSAGE, null, paises, favorito);
-			Estado estados[] = estadoRN.itens(favorito);
-			if (estados.length == 0) {
-				JOptionPane.showMessageDialog(null,
-						"É preciso cadastrar algum estado para o país "
-								+ favorito.getNome(), "",
-						JOptionPane.ERROR_MESSAGE);
+					JOptionPane.QUESTION_MESSAGE, null, paisRN.itens(),
+					cidadeAux.getEstado().getPais());
+
+			if (favorito.getCodigo() == cidadeAux.getEstado().getPais()
+					.getCodigo()) {
+				estadoAux = cidadeAux.getEstado();
 			} else {
-				estado = (Estado) JOptionPane
-						.showInputDialog(null, "Escolha o Estado", "Estado",
-								JOptionPane.QUESTION_MESSAGE, null, estados,
-								estados[0]);
-				Cidade cidades[] = cidadeRN.itens(estado);
-
-				if (cidades.length == 0) {
-					JOptionPane.showMessageDialog(null,
-							"É preciso cadastrar alguma cidade para o estado "
-									+ estado.getNome(), "",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					cidade = (Cidade) JOptionPane.showInputDialog(null,
-							"Escolha o Estado", "Estado",
-							JOptionPane.QUESTION_MESSAGE, null, cidades,
-							cidades[0]);
-					cidade.setNome(RankingUtil
-							.PrimeiraLetraMaiuscula(JOptionPane
-									.showInputDialog("Altere o nome",
-											cidade.getNome())));
-					cidade.setEstado((Estado) JOptionPane.showInputDialog(null,
-							"Escolha o Estado", "Estado",
-							JOptionPane.QUESTION_MESSAGE, null, estados,
-							cidade.getEstado()));
-				}
-
+				estadoAux = estado;
 			}
+
+			cidadeAux.setEstado((Estado) JOptionPane.showInputDialog(null,
+					"Escolha o Estado", "Estado", JOptionPane.QUESTION_MESSAGE,
+					null, estadoRN.itens(favorito), estadoAux));
+
+			cidadeRN.atualizar(cidadeAux);
 
 		}
 
@@ -104,104 +124,30 @@ public class CidadeGUI extends CrudGuiImpl {
 
 	public void listar() {
 
-		PaisRN paisRN = new PaisRN();
-		EstadoRN estadoRN = new EstadoRN();
-		CidadeRN cidadeRN = new CidadeRN();
-		Pais favorito = paisRN.getFavorito();
-		Estado estado = new Estado();
 		String aux = "";
+		if (verificaCidade("Informe o Estado para listar as cidades")) {
 
-		Pais paises[] = paisRN.itens();
-
-		if (paises.length == 0) {
-			JOptionPane.showMessageDialog(null,
-					"É preciso cadastrar algum país", "",
-					JOptionPane.ERROR_MESSAGE);
-		} else {
-			if (favorito == null) {
-				favorito = paises[0];
-			}
-			favorito = (Pais) JOptionPane.showInputDialog(null,
-					"Escolha o Pais do qual deseja-se listar as cidades",
-					"País", JOptionPane.QUESTION_MESSAGE, null, paises,
-					favorito);
-			Estado estados[] = estadoRN.itens(favorito);
-
-			if (estados.length == 0) {
-				JOptionPane.showMessageDialog(null,
-						"É preciso cadastrar algum estado para o país"
-								+ favorito.getNome(), "",
-						JOptionPane.ERROR_MESSAGE);
-			} else {
-				estado = (Estado) JOptionPane
-						.showInputDialog(null, "Escolha o Estado", "Estado",
-								JOptionPane.QUESTION_MESSAGE, null, estados,
-								estados[0]);
-				Cidade cidades[] = cidadeRN.itens(estado);
-
-				for (Cidade cidade : cidades) {
-					aux += "Código: " + cidade.getCodigo() + " Cidade: "
-							+ cidade.getNome() + "\n";
-				}
-				JOptionPane.showMessageDialog(null, aux);
-
+			for (Cidade cidade : cidadeRN.itens(estado)) {
+				aux += "Código: " + cidade.getCodigo() + " Nome: "
+						+ cidade.getNome() + "\n";
 			}
 
+			JOptionPane.showMessageDialog(null, aux);
 		}
 
 	}
 
 	public void excluir() {
 
-		PaisRN paisRN = new PaisRN();
-		EstadoRN estadoRN = new EstadoRN();
-		CidadeRN cidadeRN = new CidadeRN();
+		Cidade cidadeAux = new Cidade();
 
-		Pais favorito = paisRN.getFavorito();
-		Estado estado = new Estado();
-		Cidade cidade = new Cidade();
+		if (verificaCidade("Informe o Estado da cidade que deseja Excluir")) {
 
-		Pais paises[] = paisRN.itens();
+			cidadeAux = (Cidade) JOptionPane.showInputDialog(null,
+					"Escolha a Cidade", "Cidade", JOptionPane.QUESTION_MESSAGE,
+					null, cidadeRN.itens(estado), cidade);
+			cidadeRN.excluir(cidadeAux);
 
-		if (paises.length == 0) {
-			JOptionPane.showMessageDialog(null,
-					"É preciso cadastrar algum país", "",
-					JOptionPane.ERROR_MESSAGE);
-		} else {
-
-			if (favorito == null) {
-				favorito = paises[0];
-			}
-
-			favorito = (Pais) JOptionPane.showInputDialog(null,
-					"Escolha o Pais do qual deseja-se excluir a Cidade",
-					"País", JOptionPane.QUESTION_MESSAGE, null, paises,
-					favorito);
-			Estado estados[] = estadoRN.itens(favorito);
-			if (estados.length == 0) {
-				JOptionPane.showMessageDialog(null,
-						"É preciso cadastrar algum estado para o pais "
-								+ favorito.getNome(), "",
-						JOptionPane.ERROR_MESSAGE);
-			} else {
-				estado = (Estado) JOptionPane
-						.showInputDialog(null, "Escolha o Estado", "Estado",
-								JOptionPane.QUESTION_MESSAGE, null, estados,
-								estados[0]);
-				Cidade cidades[] = cidadeRN.itens(estado);
-				if (cidades.length == 0) {
-					JOptionPane.showMessageDialog(null,
-							"É preciso cadastrar alguma cidade para o estado "
-									+ estado.getNome(), "",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					cidade = (Cidade) JOptionPane.showInputDialog(null,
-							"Escolha a Cidade", "Cidade",
-							JOptionPane.QUESTION_MESSAGE, null, cidades,
-							cidades[0]);
-					cidadeRN.excluir(cidade);
-				}
-			}
 		}
 
 	}
@@ -278,7 +224,7 @@ public class CidadeGUI extends CrudGuiImpl {
 			}
 
 		}
-		
+
 		return resultado;
 
 	}

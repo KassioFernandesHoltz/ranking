@@ -33,4 +33,8 @@ public class CidadeRN {
 		return this.cidadeDAO.itens(estado);
 	}
 	
+	public Cidade primeiro(Estado estado){
+		return this.cidadeDAO.primeiro(estado);
+	}
+	
 }

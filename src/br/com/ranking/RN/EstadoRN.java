@@ -31,5 +31,9 @@ public class EstadoRN {
 	public Estado[] itens(Pais pais) {
 		return this.estadoDAO.itens(pais);
 	}
+	
+	public Estado primeiro(Pais pais){
+		return this.estadoDAO.primeiro(pais);
+	}
 
 }

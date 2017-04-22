@@ -3,13 +3,14 @@ package br.com.ranking.DAOVetor;
 import br.com.ranking.DAO.PaisDAO;
 import br.com.ranking.entidades.Pais;
 
+
 public class PaisDAOVetor implements PaisDAO {
 
 	private static int autoIncremento;
 	private static int quantidade;
 	private static Pais paises[] = new Pais[100];
 	private static Pais favorito;
-
+	
 	public PaisDAOVetor() {
 		// TODO Auto-generated constructor stub
 	}

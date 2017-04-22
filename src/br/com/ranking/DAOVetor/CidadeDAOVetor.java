@@ -83,4 +83,16 @@ public class CidadeDAOVetor implements CidadeDAO {
 		return auxiliar;
 	}
 
+	@Override
+	public Cidade primeiro(Estado estado) {
+		for (int i = 0; i < quantidade; i++){
+			if (cidades[i].getEstado().getCodigo() == estado.getCodigo()){
+				return cidades[i];
+			}
+		}
+		return null;
+	}
+	
+	
+
 }

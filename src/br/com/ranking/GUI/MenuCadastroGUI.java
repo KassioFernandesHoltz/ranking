@@ -13,6 +13,7 @@ public class MenuCadastroGUI {
 		PaisGui pais = new PaisGui();
 		EstadoGUI estado = new EstadoGUI();
 		CidadeGUI cidade = new CidadeGUI();
+		ClubeGUI clube = new ClubeGUI();
 		
 		do {
 			op = RankingUtil.escolhaMenu(MenuCadastro.values(),"Opção");
@@ -28,7 +29,7 @@ public class MenuCadastroGUI {
 				cidade.executar("Cidade");
 				break;
 			case 3: 
-				crudGuiImpl.executar("Clube");
+				clube.executar("Clube");
 				break;			
 			}
 

@@ -88,4 +88,17 @@ public class EstadoDAOVetor implements EstadoDAO {
 
 	}
 
+	@Override
+	public Estado primeiro(Pais pais) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < quantidade; i++){
+			if(estados[i].getPais().getCodigo() == pais.getCodigo()){
+				return estados[i];
+			}
+		}
+		return null;
+	}
+	
+	
+
 }

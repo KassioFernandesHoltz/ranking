@@ -14,5 +14,7 @@ public interface EstadoDAO {
 	public void excluir(Estado estado);
 
 	public Estado[] itens(Pais pais);
+	
+	public Estado primeiro(Pais pais);
 
 }
